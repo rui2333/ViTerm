@@ -1,0 +1,20 @@
+body {
+    background-color: #b7b7bc;
+}
+
+h1{
+	font-style: bold;
+	text-align: center;
+	font-family: Verdana;
+}
+#image
+{
+	text-align: center;
+}
+
+img{
+	width:304px;
+	height:228px;"
+	display: block;
+    background-position: center;
+}
