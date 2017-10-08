@@ -1,4 +1,5 @@
 body {
+  padding-top: 50px;
     background-image: url("blue-gradient-background-2.jpg");
 }
 
@@ -29,6 +30,7 @@ h2{
 }
 
 .transparent-textare{
+  margin-top: 40px;
   border-radius: 5px;
   background-color: #A3B9CB;
   border: 1px solid grey;
