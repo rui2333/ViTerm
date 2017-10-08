@@ -22,11 +22,11 @@ with open ('./model/tensorboard_iteration.txt', 'w') as wf:
 	wf.write(str(itr + 1))
 
 #Config
-learning_rate = 0.01
+learning_rate = 0.0001
 input_num = 142
 hidden_num = 24
 output_num = 24
-batch_size = 50
+batch_size = 2
 lmbda = 0.02
 
 def get_batch(data, batch_size=batch_size):
@@ -36,11 +36,6 @@ def get_batch(data, batch_size=batch_size):
 	std = np.std(instance, axis=0)
 	std = np.array([max(i, 1e-8) for i in std])
 	instance /= std #Unit variance
-
-	# if np.array_equal(instance, np.zeros(shape=(10,142))):
-	# 	print instance
-	#tf.nn.l2_normalize(instance, 0)
-
 	labels = np.array([np.array(examp[1]) for examp in examples])
 
 	return instance, labels
@@ -49,7 +44,6 @@ def main ():
 	#Input/Output
 	x = tf.placeholder(tf.float32, shape=[None, input_num], name="x")
 	y_ = tf.placeholder(tf.float32, shape=[None, output_num], name="y_")
-		#None means the batch can be any size
 
 	#Weights and bias
 	W1 = tf.Variable(tf.truncated_normal(shape =[input_num, hidden_num], mean = 0.0, stddev = 0.1), name="W1")
@@ -117,7 +111,7 @@ def main ():
 						feed_dict={x: instance, y_: labels})
 					writer.add_summary(summary, i)
 
-					print "Loss: {}, Acc: {}".format(loss_val, acc)
+					print "Loss: {}, Accuracy: {}".format(loss_val, acc)
 
 				train_step.run(feed_dict={x: instance, y_: labels}) #Able to run since session is interactive
 				#feed_dict can replace any tensor
@@ -128,42 +122,21 @@ def main ():
 				saver.save(sess, "./model/tf_model")
 				print "* Loss improved - Model Saved *"
 
+		#TEST
 		correct, total = 0.0, 0.0
-		k = 0
-		c, t = [0]*26, [0]*26
-		for test_examp in train_data:
-			instance, label = np.array([test_examp[0]]), np.array([test_examp[1]])
-			out = sess.run([y], feed_dict={x: instance, y_: label})
-			
+		for examp in train_data:
+			instance, label = np.array([examp[0]]), np.array([examp[1]])
+			output = sess.run([y], feed_dict={x: instance, y_: label})
 	
-			argA, argB = 0, 0
-			maxA, maxB = -100000, -100000
-	
-			for i, val in enumerate(out[0][0]):
-				if val > maxA:
-					maxA = val
-					argA = i
-			for j, val in enumerate(label[0]):
-				if val > maxB:
-					maxB = val
-					argB = j
+			arg_output = np.argmax(output[0][0])
+			arg_label = np.argmax(label[0])
 
-			if argA != argB:
-				print "label", label[0], argB
-				print "out", out, argA
-				c[argB] += 1
-				t[argA] += 1
-			k += 1
-
-			if argA == argB:
+			if arg_output == arg_label:
 				correct += 1
 			total += 1
 		print ("Test Accuracy: {} ({}/{})".format((correct / total), correct, total))
-		print c
-		print t
 
 #tensorboard --logdir /tmp/vi_asl/
-
 
 if __name__ == "__main__":
 	main()
