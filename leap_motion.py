@@ -8,19 +8,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(src_dir, arch_dir)))
 import Leap
 from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture
 
-def getchar():
-   #Returns a single character from standard input
-   import tty, termios, sys
-   fd = sys.stdin.fileno()
-   old_settings = termios.tcgetattr(fd)
-   try:
-      tty.setraw(sys.stdin.fileno())
-      ch = sys.stdin.read(1)
-   finally:
-      termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-   return ch
-
-
 class SampleListener(Leap.Listener):
 
     def on_connect(self, controller):
@@ -45,13 +32,22 @@ def main():
     for i in range(26):
         countDict[chr(ord("a")+i)] = 0
 
+    count = 0
     # when hitting space, output a json
     print "Press Enter to output"
     while True:
+        time.sleep(0.02)
         # the output file
-        # print getchar()
-        file = sys.stdin.readline()
-        file_object  = open(filename, "w")
+        if count == 0:
+            letter = sys.stdin.readline()[0]
+
+        filename = 'trainings/'+ letter + str(count)+".json"
+        count = count+1
+        if count == 500:
+            count = 0
+            print letter + ' done'
+
+        file  = open(filename, "w")
 
         frame = controller.frame()
         frameDict = {
@@ -98,8 +94,8 @@ def main():
                 ]
             })
 
-        str = json.dumps(frameDict, indent = 4)
-        file.write(str)
+        jsonStr = json.dumps(frameDict, indent = 4)
+        file.write(jsonStr)
         file.close()
 
         # print "Frame id: %d, timestamp: %d, hands: %d, fingers: %d" % (frame.id, frame.timestamp, len(frame.hands), len(frame.fingers))
