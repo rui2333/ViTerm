@@ -7,14 +7,16 @@ h1{
 	text-align: center;
 	font-family: Verdana;
 }
-#image
-{
+
+.center{
 	text-align: center;
 }
 
-img{
-	width:304px;
-	height:228px;"
-	display: block;
-    background-position: center;
+#image{
+	width:350px;
+	height:300;"
+	margin-left: 50px;
 }
+
+
+
