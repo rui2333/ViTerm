@@ -1,5 +1,5 @@
 body {
-    background-color: #b7b7bc;
+    background-image: url("blue-gradient-background-2.jpg");
 }
 
 h1{
@@ -15,9 +15,31 @@ h2{
 	text-align: center;
 }
 
+.button{
+	border-radius: 4px;
+	width: 70px;
+	height: 30px;
+	background-color: white;
+	color: black
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor:pointer;
+    /*border: 2px solid #555555;*/
+}
+
+.button:hover {
+   background-color: #555555;
+   color: white;
+}
 #image{
-	width:350px;
-	height:300px;
+	width:250px;
+	height:200px;
+}
+
+#title{
+	text-align: center;
+	width:400px;
+	height:150px;
 }
 
 
