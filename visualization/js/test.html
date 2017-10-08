@@ -4,18 +4,34 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="visual.css">
 <title>Visualization of Chat bot</title>
-<script>
-  var msg = new SpeechSynthesisUtterance('Hello World');
-  window.speechSynthesis.speak(msg);
-</script>
+<script src="jquery-3.2.1.min.js"></script>
+<script src="text2speech.js"></script>
+
 </head>
 
 <body>
 
+<div class = "center">
+
 <h1> ASL Chatbot ViTerm </h1>
+<img id ="image" src="sign_lang.png" alt="Sign Language">
+
+<h2>Text to Speech:</h2>
+<form id = "toSpeak">
+  <input id="someInput" type="text" name="text"><br>
+  <button id="someBtn" onclick="myFunction()">Try it</button>
+</div>
+
+
+
 
 </body>
 
-<img src="sign_lang.png" alt="Sign Language">
+
+<script>
+$("#someBtn").click(function(){
+	window.text2speech($("#someInput").val());
+});
+</script>
 
 </html>
