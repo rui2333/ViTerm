@@ -1,0 +1,26 @@
+{
+  "name": "viterm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phenyl-sphinx/ViTerm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phenyl-sphinx/ViTerm/issues"
+  },
+  "homepage": "https://github.com/phenyl-sphinx/ViTerm#readme",
+  "dependencies": {
+    "node-svm": "^2.1.8"
+  }
+}
