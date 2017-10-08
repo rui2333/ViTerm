@@ -7,15 +7,17 @@ h1{
 	text-align: center;
 	font-family: Verdana;
 }
+h2{
+	font-family: Verdana;
 
+}
 .center{
 	text-align: center;
 }
 
 #image{
 	width:350px;
-	height:300;"
-	margin-left: 50px;
+	height:300px;
 }
 
 
