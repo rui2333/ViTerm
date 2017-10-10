@@ -56,7 +56,7 @@ def main ():
 	h_prime = tf.nn.relu(h)
 	y = tf.add(tf.matmul(h_prime, W2), b2, name="y")
 
-	#Loss (softmax -> cross entropy loss -> average), SGD
+	#Loss (softmax -> cross entropy loss -> plus weight regulation), Adam
 	loss = (tf.reduce_mean(
 		tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y)) +
 			lmbda*tf.nn.l2_loss(W1) +
@@ -112,10 +112,10 @@ def main ():
 					writer.add_summary(summary, i)
 
 					print "Loss: {}, Accuracy: {}".format(loss_val, acc)
-
-				train_step.run(feed_dict={x: instance, y_: labels}) #Able to run since session is interactive
-				#feed_dict can replace any tensor
-
+				
+				#Train iteration
+				train_step.run(feed_dict={x: instance, y_: labels})
+				
 			#Save if loss has improved
 			if loss_val < best_loss:
 				best_loss = loss_val
@@ -135,7 +135,8 @@ def main ():
 				correct += 1
 			total += 1
 		print ("Test Accuracy: {} ({}/{})".format((correct / total), correct, total))
-
+		
+#Launch tensorboard with the following
 #tensorboard --logdir /tmp/vi_asl/
 
 if __name__ == "__main__":
